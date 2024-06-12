@@ -1,17 +1,30 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import  openDB  from '../../../utils/database';
+import jwt from 'jsonwebtoken';
+import  openDB  from '../../../utils/database'
+import {  NextResponse } from 'next/server';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+const JWT_SECRET = "konald"
+
+export async function POST(req: Request) {
+  console.log("here")
   if (req.method === 'POST') {
-    const { username, password } = req.body;
+    const body = await req.json()
+    const { username, password } = body;
     const db = await openDB();
+    console.log(db)
     const user = await db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
+    console.log(user)
     if (user) {
-      res.status(200).json({ message: 'Login successful' });
+      // res.status(200).json({ message: 'Login successful' });
+      const token = jwt.sign({ userId: user.id }, JWT_SECRET , {
+        expiresIn: '1m',
+      })
+      console.log(token)
+      return NextResponse.json({ token })
     } else {
-      res.status(401).json({ message: 'Invalid username or password' });
+      NextResponse.json({ status: 400 ,message: 'Invalid username or password' });
     }
   } else {
-    res.status(405).json({ message: 'Method not allowed' });
+    NextResponse.json({ message: 'Method not allowed' });
   }
 }

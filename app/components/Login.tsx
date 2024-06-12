@@ -18,7 +18,8 @@ const router = useRouter();
       body: JSON.stringify({ username, password }),
     });
     const data = await response.json();
-    if (response.status === 200) {
+    console.log(data)
+    if (response) {
       console.log(data);
       setError('');
       // Handle successful login, e.g., redirect or set session
