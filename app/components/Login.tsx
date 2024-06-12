@@ -26,6 +26,7 @@ const router = useRouter();
       router.push('/');
 
     } else {
+      console.log(response)
       setError(data.message);
     }
   };
