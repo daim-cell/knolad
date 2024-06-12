@@ -7,7 +7,6 @@ export async function POST(req: Request) {
     const { username, password, category } = body;
     try {
       const db = await openDB();
-      console.log(db)
       await db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, category TEXT)');
       await db.run('INSERT INTO users (username, password, category) VALUES (?, ?, ?)', [username, password, category]);
       return NextResponse.json({ message: 'User registered successfully' });

@@ -1,17 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import  openDB  from '../../../utils/database';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    const { username, password } = req.body;
+import  openDB  from '../../../utils/database';
+import {  NextResponse } from 'next/server';
+export async function POST(req: NextResponse) {
+    const body = await req.json()
+    const { username, password } = body;
     const db = await openDB();
     const user = await db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password]);
     if (user) {
-      res.status(200).json({ message: 'Login successful' });
+      return NextResponse.json({ message: 'Login successful' });
     } else {
-      res.status(401).json({ message: 'Invalid username or password' });
+      return NextResponse.json({ message: 'Invalid username or password' });
     }
-  } else {
-    res.status(405).json({ message: 'Method not allowed' });
-  }
+  
 }
