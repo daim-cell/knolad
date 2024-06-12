@@ -7,7 +7,6 @@ const JWT_SECRET = "konald"
 
 export async function POST(req: Request) {
   console.log("here")
-  if (req.method === 'POST') {
     const body = await req.json()
     const { username, password } = body;
     const db = await openDB();
@@ -22,9 +21,7 @@ export async function POST(req: Request) {
       console.log(token)
       return NextResponse.json({ token })
     } else {
-      NextResponse.json({ status: 400 ,message: 'Invalid username or password' });
+      return NextResponse.json({ status: 400 ,message: 'Invalid username or password' });
     }
-  } else {
-    NextResponse.json({ message: 'Method not allowed' });
-  }
+  
 }

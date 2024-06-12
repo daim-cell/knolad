@@ -25,12 +25,12 @@ export default function LoginPage() {
       }
       // Process response here
       console.log("loged in", response);
-      toast.success( "logedin" );
+      toast.success( "Logged In" );
     } catch (error: any) {
       console.error("loged in failed:", error);
       toast.error("Failed");
     }
-    // router.push('/login');
+    router.push('/');
   };
 
 export default function Login() {
@@ -41,7 +41,7 @@ export default function Login() {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Sign in to your account
+              Login to your account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -81,7 +81,7 @@ export default function Login() {
                 ></input>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-start">
+                {/* <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
                       id="remember"
@@ -90,8 +90,8 @@ export default function Login() {
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                       required
                     ></input>
-                  </div>
-                  <div className="ml-3 text-sm">
+                  </div> */}
+                  {/* <div className="ml-3 text-sm">
                     <label
                       htmlFor="remember"
                       className="text-gray-500 dark:text-gray-300"
@@ -99,24 +99,25 @@ export default function Login() {
                       Remember me
                     </label>
                   </div>
-                </div>
-                <a
+                </div> */}
+                {/* <a
                   href="/routes/register"
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Signup?
-                </a>
+                </a> */}
               </div>
               <button
                 type="submit"
                 className="w-full text-white bg-gray-500 hover:bg-gray-600 border-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                Sign in
+                Login
               </button>
             </form>
           </div>
         </div>
       </div>
+      <Toaster position="top-center" /> 
     </section>
     
   );

@@ -44,7 +44,7 @@ export default function Register() {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Sign in to your account
+              Register your user
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
@@ -85,7 +85,7 @@ export default function Register() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
-                  <div className="flex items-center h-5">
+                  {/* <div className="flex items-center h-5">
                     <input
                       id="remember"
                       aria-describedby="remember"
@@ -93,33 +93,34 @@ export default function Register() {
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                       required
                     ></input>
-                  </div>
-                  <div className="ml-3 text-sm">
+                  </div> */}
+                  {/* <div className="ml-3 text-sm">
                     <label
                       htmlFor="remember"
                       className="text-gray-500 dark:text-gray-300"
                     >
                       Remember me
                     </label>
-                  </div>
+                  </div> */}
                 </div>
-                <a
+                {/* <a
                   href="/routes/login"
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Signin
-                </a>
+                </a> */}
               </div>
               <button
                 type="submit"
                 className="w-full text-white bg-gray-500 hover:bg-gray-600 border-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-                Sign in
+                Register
               </button>
             </form>
           </div>
         </div>
       </div>
+      <Toaster position="top-center" /> 
     </section>
     
   );
