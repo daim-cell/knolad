@@ -111,29 +111,38 @@ const Level: React.FC<Props> = ({level}) => {
 
 
   return (
-    <div>
-      <h1>Level {level}</h1>
-      <p>Score: {score}</p>
-      <p>Current Question: {currentQuestionIndex + 1}</p>
-      {questions.length > 0 && currentQuestionIndex < questions.length ? (
-        <div>
-          <h2>{questions[currentQuestionIndex].question}</h2>
-          {questions[currentQuestionIndex].options.map((option, idx) => (
-            <div key={idx}>
-              <button onClick={() => handleAnswerSelect(option)}>
-                {option}
-              </button>
-            </div>
-          ))}
-          <button onClick={handleSubmitAnswer} disabled={selectedAnswer === null}>
-            Submit Answer
-          </button>
-        </div>
-      ) : (
-        <div>
-          <h2>Loading questions...</h2>
-        </div>
-      )}
+<div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-96 text-center">
+        <h1 className="text-2xl font-bold">Level {level}</h1>
+        <p className="text-xl">Score: {score}</p>
+        <p className="text-xl mb-4">Current Question: {currentQuestionIndex + 1}</p>
+        {questions.length > 0 && currentQuestionIndex < questions.length ? (
+          <div className="question-container">
+            <h2 className="text-lg font-semibold mb-4">{questions[currentQuestionIndex].question}</h2>
+            {questions[currentQuestionIndex].options.map((option, idx) => (
+              <div key={idx} className="mb-2">
+                <button
+                  className={`w-full py-2 px-4 rounded-md border ${selectedAnswer === option ? 'bg-gray-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                  onClick={() => handleAnswerSelect(option)}
+                >
+                  {option}
+                </button>
+              </div>
+            ))}
+            <button
+              className={`w-full py-2 px-4 mt-4 rounded-md ${selectedAnswer === null ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-green-500 text-white hover:bg-green-600'}`}
+              onClick={handleSubmitAnswer}
+              disabled={selectedAnswer === null}
+            >
+              Submit Answer
+            </button>
+          </div>
+        ) : (
+          <div>
+            <h2 className="text-lg">Loading questions...</h2>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

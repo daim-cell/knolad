@@ -1,39 +1,46 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { signIn, useSession } from "next-auth/react";
+
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+      console.log(session)
+      router.push('/')
+    }
+  }, [session])
+
   const handleSubmit = async (event:any) => {
     event.preventDefault();
-    // Perform form submission logic here
-    console.log('Form submitted with email:', email, 'and password:', password);
+
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response: any = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
       });
+      console.log("response",{ response });
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       // Process response here
-      console.log("loged in", response);
-      toast.success( "Logged In" );
+      console.log("Login Successful", response);
+      toast.success("Login Successful");
     } catch (error: any) {
-      console.error("loged in failed:", error);
-      toast.error("Failed");
+      console.error("Login Failed:", error);
+      toast.error("Login Failed");
     }
-    router.push('/');
   };
 
-export default function Login() {
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       
@@ -52,13 +59,13 @@ export default function Login() {
                   Your email
                 </label>
                 <input
-                  type="email"
+                  type="user"
                   name="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="name@company.com"
+                  placeholder="username"
                   required
                 ></input>
               </div>
@@ -81,31 +88,6 @@ export default function Login() {
                 ></input>
               </div>
               <div className="flex items-center justify-between">
-                {/* <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required
-                    ></input>
-                  </div> */}
-                  {/* <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div> */}
-                {/* <a
-                  href="/routes/register"
-                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Signup?
-                </a> */}
               </div>
               <button
                 type="submit"
