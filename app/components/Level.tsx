@@ -112,11 +112,11 @@ const Level: React.FC<Props> = ({level, survey}) => {
 
 
   return (
-<div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96 text-center">
-        <h1 className="text-2xl font-bold">Level {level}</h1>
-        <p className="text-xl">Score: {score}</p>
-        <p className="text-xl mb-4">Current Question: {currentQuestionIndex + 1}</p>
+<div className="flex items-center justify-center min-h-screen bg-gray-100 text-black">
+      <div className="bg-white p-8 rounded-lg shadow-md w-96 text-center text-black">
+        <h1 className="text-2xl font-bold text-black">Level {level}</h1>
+        <p className="text-xl text-black">Score: {score}</p>
+        <p className="text-xl mb-4 text-black">Current Question: {currentQuestionIndex + 1}</p>
         {questions.length > 0 && currentQuestionIndex < questions.length ? (
           <div className="question-container">
             <h2 className="text-lg font-semibold mb-4">{questions[currentQuestionIndex].question}</h2>
