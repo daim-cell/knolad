@@ -31,7 +31,6 @@ export default function SurveyForm() {
   
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log({survey_name: surveyName, opened: opened ? 'open' : 'hidden', questions})
         const response = await fetch('/api/survey', {
             method: 'POST',
             headers: {

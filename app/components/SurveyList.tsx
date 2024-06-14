@@ -1,5 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
 
 interface Survey {
   survey_id: number;
@@ -42,7 +44,13 @@ const SurveyList: React.FC = () => {
     <div>
       {surveys.map(survey => (
         <div key={survey.survey_id} className="flex justify-between items-center border-b-2 py-2">
-          <p>{survey.survey_name}</p>
+          <p>
+            <Link href={{pathname: 'level1', 
+              query: {surveyid:survey.survey_id}
+            }}>
+            {survey.survey_name}
+            </Link>
+            </p>
           <button
             onClick={() => toggleOpened(survey.survey_id, survey.opened)}
             className={`rounded-lg p-2 ${survey.opened ? 'bg-green-500' : 'bg-gray-400'} text-white`}

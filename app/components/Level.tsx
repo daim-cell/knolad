@@ -11,8 +11,9 @@ interface Question {
 }
 interface Props {
     level: number;
+    survey: number
   }
-const Level: React.FC<Props> = ({level}) => {
+const Level: React.FC<Props> = ({level, survey}) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -22,7 +23,7 @@ const Level: React.FC<Props> = ({level}) => {
   useEffect(() => {
     async function fetchQuestions() {
       try {
-        const response = await fetch(`/api/quiz/level?level_no=${level}&survey_id=1`);
+        const response = await fetch(`/api/quiz/level?level_no=${level}&survey_id=${survey}`);
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
