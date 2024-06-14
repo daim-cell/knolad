@@ -34,8 +34,9 @@ const Home: React.FC = () => {
     <div className="flex justify-center items-center min-h-screen bg-black-100">
       <div className="flex justify-center space-x-4">
         { role != 'student' && <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleCreateSurvey('routes/create_survey')}>Create Survey</button>}
-        <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleSurveysClick('routes/show_surveys')}>View Surveys</button>
-        { role != 'student' && <button className="bg-green-500 text-white px-4 py-2 rounded">Student History</button>}
+        { role != 'student'  && <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleSurveysClick('routes/show_surveys')}>View Surveys</button>}
+        { role == 'student'  && <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleSurveysClick('routes/take_surveys')}>Take Surveys</button>}
+        { role != 'student' && <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleSurveysClick('routes/history')}>Student History</button>}
         {role == 'admin' && <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleButtonClick('routes/register')}>Create User</button>}
         <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleLogout()}>Logout</button> 
       </div>

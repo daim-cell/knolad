@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { signOut, useSession } from 'next-auth/react';
 
 interface Question {
   question_id: number;
@@ -20,7 +21,23 @@ const Level: React.FC<Props> = ({level, survey}) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
   const router = useRouter();
+  const { data: session } : any = useSession();
+  
+  async function endofLevel(survey_id:number, testResult:string) {
+        // Insert history record
+        const historyResponse = await fetch('/api/history', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: session?.user?.email || 'Anonymous', // Get the username from session
+            survey_id: survey_id,
+            test_result: testResult,
+          }),
 
+  })
+}
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -80,8 +97,9 @@ const Level: React.FC<Props> = ({level, survey}) => {
                 if (currentQuestionIndex + 1 < questions.length) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                 } else {
-                    toast.error( "You have minimal knowledge." );
-                    
+                    await toast.error( "You have minimal knowledge." );
+                    await endofLevel(survey, 'minimal knowledge');
+                    router.push(`/routes/take_surveys`);
                 }
             }
         } else if (level == 2) {
@@ -92,18 +110,24 @@ const Level: React.FC<Props> = ({level, survey}) => {
                 if (currentQuestionIndex + 1 < questions.length) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                 } else {  
-                    toast.error("You have average knowledge.")
+                    await toast.error("You have average knowledge.");
+                    await endofLevel(survey, 'average knowledge');
+                    router.push(`/routes/take_surveys`);
                 }
             }
         } else {
             if (updatedScore == 5) {
                 // Continue to the next question
-                toast.success("You win the test!");
+                await toast.success("You Win!");
+                await endofLevel(survey, 'Win');
+                router.push(`/routes/take_surveys`);
             } else {
                 if (currentQuestionIndex + 1 < questions.length) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                 } else {
-                    toast.error("You have lost at last level.")
+                    await toast.error("You have average knowledge.");
+                    await endofLevel(survey, 'average knowledge');
+                    router.push(`/routes/take_surveys`);
                 }
             }
         }
@@ -114,7 +138,7 @@ const Level: React.FC<Props> = ({level, survey}) => {
 
 
   return (
-<div className="flex items-center justify-center min-h-screen bg-gray-100 text-black">
+<div className="flex bg-black items-center justify-center min-h-screen bg-gray-100 text-black">
       <div className="bg-white p-8 rounded-lg shadow-md w-96 text-center text-black">
         <h1 className="text-2xl font-bold text-black">Level {level}</h1>
         <p className="text-xl text-black">Score: {score}</p>

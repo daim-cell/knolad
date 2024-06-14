@@ -15,6 +15,7 @@ export async function GET(req: Request) {
           JOIN options o ON q.question_id = o.question_id
           WHERE q.survey_id = ? AND q.level = ?;
   `, [survey_id, level_no]);
+  console.log(questions)
     return NextResponse.json(questions);
   } catch (error) {
     console.error('Database error:', error);
