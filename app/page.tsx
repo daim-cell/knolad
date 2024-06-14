@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   
   
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-black-100">
       <div className="flex justify-center space-x-4">
         <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleCreateSurvey('routes/create_survey')}>Create Survey</button>
         <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={() => handleSurveysClick('routes/show_surveys')}>Surveys</button>

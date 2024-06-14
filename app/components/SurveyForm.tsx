@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface Option {
   option1: string;
@@ -22,6 +23,7 @@ export default function SurveyForm() {
       level: Math.floor(index / 5) + 1,
       options: { option1: '', option2: '', option3: '', option4: '' },
     }));
+   
   
     const [surveyName, setSurveyName] = useState<string>('');
     const [opened, setOpened] = useState<boolean>(false);
@@ -30,17 +32,17 @@ export default function SurveyForm() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log({survey_name: surveyName, opened: opened ? 'open' : 'hidden', questions})
-        const response = await fetch('/api/survey/create', {
+        const response = await fetch('/api/survey', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ survey_name: surveyName, opened: opened ? 'open' : 'hidden', questions }),
+            body: JSON.stringify({ survey_name: surveyName, opened: opened ? '1' : '0', questions }),
         });
     
         if (response.ok) {
             const data = await response.json();
-            alert(`Survey created with ID: ${data.survey_id}`);
+            toast.success( "Survey Created Succesfully" );
             setSurveyName('');
             setOpened(false);
             setQuestions(initialQuestions);
