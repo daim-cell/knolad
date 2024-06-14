@@ -2,6 +2,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 interface Question {
   question_id: number;
@@ -74,34 +75,35 @@ const Level: React.FC<Props> = ({level, survey}) => {
         if (level == 1) {
             if (currentQuestionIndex >= 2 && updatedScore >= 3) {
                 // Continue to the next question
-                router.push('/routes/level2');
+                router.push(`/routes/level2?surveyid=${survey}`);
             } else {
                 if (currentQuestionIndex + 1 < questions.length) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                 } else {
-                    alert("You have minimal knowledge.");
+                    toast.error( "You have minimal knowledge." );
+                    
                 }
             }
         } else if (level == 2) {
             if (currentQuestionIndex >= 3 && updatedScore >= 4) {
                 // Continue to the next question
-                router.push('/routes/level3');
+                router.push(`/routes/level3?surveyid=${survey}`);
             } else {
                 if (currentQuestionIndex + 1 < questions.length) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
-                } else {
-                    alert("You have average knowledge.");
+                } else {  
+                    toast.error("You have average knowledge.")
                 }
             }
         } else {
             if (updatedScore == 5) {
                 // Continue to the next question
-                alert("You win the test!");
+                toast.success("You win the test!");
             } else {
                 if (currentQuestionIndex + 1 < questions.length) {
                     setCurrentQuestionIndex(currentQuestionIndex + 1);
                 } else {
-                    alert("You have lost at last level.");
+                    toast.error("You have lost at last level.")
                 }
             }
         }

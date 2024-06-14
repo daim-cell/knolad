@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 interface Option {
   option1: string;
