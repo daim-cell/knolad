@@ -2,14 +2,6 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import openDB from '../../../utils/database';
-import { NextResponse } from "next/server";
-
-interface Session {
-  id: string; // Define id property
-  user: {
-    email: string | null | undefined;
-  };
-}
 
 const handler = NextAuth({
   session: {
@@ -69,7 +61,6 @@ const handler = NextAuth({
       if(user){
         token.user = user
       }
-      
       return token;
     },
     async session({ session, token }) {
