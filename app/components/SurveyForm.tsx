@@ -88,7 +88,7 @@ export default function SurveyForm() {
             <label
               htmlFor="toggle-opened"
               className={`block w-14 h-8 rounded-full cursor-pointer relative transition-colors ${
-                opened ? 'bg-blue-600' : 'bg-gray-300'
+                opened ? 'bg-green-600' : 'bg-gray-300'
               }`}
             >
               <span
@@ -163,7 +163,7 @@ export default function SurveyForm() {
             </div>
           </div>
         ))}
-        <button type="submit" className="w-full px-4 py-2 bg-blue-500 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-blue-700 dark:hover:bg-blue-500">
+        <button type="submit" className="w-full px-4 py-2 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 dark:bg-green-700 dark:hover:bg-green-500">
           Create Survey
         </button>
       </form>

@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const protectedRoutes = ['/routes/register','/routes/create_survey','/routes/show_surveys','/routes/level1','/routes/level2','/routes/level3','/']
+const protectedRoutes = ['/routes/register','/routes/create_survey','/routes/show_surveys','/routes/take_surveys','/routes/level1','/routes/level2','/routes/level3','/']
 const AuthRoutes = ['/routes/login']
 
 export async function middleware(req: NextRequest) {

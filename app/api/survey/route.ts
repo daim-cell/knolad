@@ -15,6 +15,7 @@ interface Question {
 }
 
 interface Survey {
+  survey_id: number
   survey_name: string;
   opened: string;
   questions: Question[];
@@ -57,11 +58,17 @@ export async function POST(req: Request) {
   } 
   
   export async function GET(req: Request) {
-    const url = new URL(req.url)
-  
+    const url = new URL(req.url);
+    const user = url.searchParams.get("user");
+    let surveyData:Survey;
     const db = await openDB();
-    const surveyData:Survey = await db.all('SELECT * FROM survey');
-  
+    if (user){
+      surveyData = await db.all('SELECT s.survey_id, s.survey_name, s.opened FROM survey s LEFT JOIN history h ON h.survey_id = s.survey_id AND h.username = ? WHERE h.survey_id IS NULL AND s.opened = 1;', user)
+    }
+    else{
+      surveyData = await db.all('SELECT * FROM survey');
+    }
+    console.log(surveyData)
     return NextResponse.json(surveyData);
   }
   

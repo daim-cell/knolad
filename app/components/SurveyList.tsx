@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-
+import { useSession } from 'next-auth/react';
 
 interface Survey {
   survey_id: number;
@@ -12,16 +12,28 @@ interface Survey {
 const SurveyList: React.FC = () => {
   const [surveys, setSurveys] = useState<Survey[]>([]);
 
+  const { data: session } : any = useSession();
+
   useEffect(() => {
     fetchSurveys();
   }, []);
 
   const fetchSurveys = async () => {
-    const response = await fetch('/api/survey');
-    if (response.ok) {
-      const data = await response.json();
-      setSurveys(data);
+    if (session?.user?.user.category == 'student'){
+      const response = await fetch(`/api/survey?user=${session?.user?.user.email}`);
+      if (response.ok) {
+        const data = await response.json();
+        setSurveys(data);
+      }
     }
+    else{
+      const response = await fetch('/api/survey');
+      if (response.ok) {
+        const data = await response.json();
+        setSurveys(data);
+      }
+    }
+    
   };
 
   const toggleOpened = async (surveyId: number, opened: boolean) => {
@@ -42,14 +54,10 @@ const SurveyList: React.FC = () => {
 
   return (
     <div>
-      {surveys.map(survey => (
+      {session?.user?.user.category != 'student' && surveys.map(survey => (
         <div key={survey.survey_id} className="flex justify-between items-center border-b-2 py-2">
           <p>
-            <Link href={{pathname: 'level1', 
-              query: {surveyid:survey.survey_id}
-            }}>
             {survey.survey_name}
-            </Link>
             </p>
           <button
             onClick={() => toggleOpened(survey.survey_id, survey.opened)}
@@ -57,6 +65,17 @@ const SurveyList: React.FC = () => {
           >
             {survey.opened ? 'Opened' : 'Closed'}
           </button>
+        </div>
+      ))}
+      {session?.user?.user.category == 'student' && surveys.map(survey => (
+        <div key={survey.survey_id} className="flex justify-between items-center border-b-2 py-2">
+          <p className="text-green-500 hover:text-green-700 font-bold underline">
+            <Link href={{pathname: 'level1', 
+              query: {surveyid:survey.survey_id}
+            }}>
+            {survey.survey_name}
+            </Link>
+            </p>
         </div>
       ))}
     </div>
