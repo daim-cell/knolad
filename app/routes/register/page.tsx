@@ -1,6 +1,7 @@
 'use client'
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import RadioButton from '../../components/Radio';
 
@@ -9,15 +10,24 @@ export default function Register() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [role, setRole] = useState('');
   const [category, setCategory] = useState<string>('admin');
+  const { data: session, status } : any = useSession();
 
-    const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(event.target.value)
-        setCategory(event.target.value);
-    };
+  useEffect(() => {
+    if (session) {
+      const category = session?.user?.user?.category;
+      console.log("session in home", category);
+      setRole(category);
+    }
+  }, [session]);
 
-  const handleSubmit = async (event:any) => {
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+    setCategory(event.target.value);
+  };
+
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log('Form submitted with email:', email, 'and password:', password, category);
     try {
@@ -33,23 +43,54 @@ export default function Register() {
       }
       // Process response here
       console.log("Registration Successful", response);
-      toast.success( "Registration Successful" );
+      toast.success("Registration Successful");
     } catch (error: any) {
       console.error("Registration Failed:", error);
       toast.error("Registration Failed");
     }
   };
 
-  return (
-    <section className="bg-gray-50 dark:bg-gray-900">
-      
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+  if (status === 'loading') {
+    return (
+      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <svg
+            className="animate-spin h-10 w-10 text-gray-600 dark:text-gray-300 mx-auto mb-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l-3 3 3 3v4a8 8 0 01-8-8z"
+            ></path>
+          </svg>
+          <p className="text-lg text-gray-700 dark:text-gray-300">
+            Loading, please wait...
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (session?.user?.user?.category == "admin") {
+    return (
+      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+        <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-6 space-y-4 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Register your user
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -58,7 +99,7 @@ export default function Register() {
                   Username
                 </label>
                 <input
-                  type="username"
+                  type="text"
                   name="username"
                   id="email"
                   value={email}
@@ -66,7 +107,7 @@ export default function Register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="username"
                   required
-                ></input>
+                />
               </div>
               <div>
                 <label
@@ -84,36 +125,30 @@ export default function Register() {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
-                ></input>
+                />
               </div>
-              <div className="flex items-center">
-                <div className="flex items-center justify-center">
-            <div className="flex justify-evenly items-center space-x-8">
+              <div className="flex justify-evenly items-center space-x-8">
                 <RadioButton 
-                    label="Admin" 
-                    name="options" 
-                    value="admin" 
-                    checked={category === 'admin'} 
-                    onChange={handleOptionChange} 
+                  label="Admin" 
+                  name="options" 
+                  value="admin" 
+                  checked={category === 'admin'} 
+                  onChange={handleOptionChange} 
                 />
                 <RadioButton 
-                    label="Teacher" 
-                    name="options" 
-                    value="teacher" 
-                    checked={category === 'teacher'} 
-                    onChange={handleOptionChange} 
+                  label="Teacher" 
+                  name="options" 
+                  value="teacher" 
+                  checked={category === 'teacher'} 
+                  onChange={handleOptionChange} 
                 />
                 <RadioButton 
-                    label="Student" 
-                    name="options" 
-                    value="student" 
-                    checked={category === 'student'} 
-                    onChange={handleOptionChange} 
+                  label="Student" 
+                  name="options" 
+                  value="student" 
+                  checked={category === 'student'} 
+                  onChange={handleOptionChange} 
                 />
-            </div>
-        {/* </div> */}
-                </div>
-
               </div>
               <button
                 type="submit"
@@ -124,9 +159,9 @@ export default function Register() {
             </form>
           </div>
         </div>
-      </div>
-      <Toaster position="top-center" /> 
-    </section>
-    
-  );
+        <Toaster position="top-center" /> 
+      </section>
+    );
+  }
+  router.push('/');
 }

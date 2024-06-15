@@ -6,6 +6,7 @@ import openDB from '../../../utils/database';
 const handler = NextAuth({
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 30,
   },
 
   pages: {
@@ -70,6 +71,9 @@ const handler = NextAuth({
       }
       return session;
     }
+  },
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
   }
 });
 

@@ -7,7 +7,7 @@ import { signOut, useSession } from 'next-auth/react';
 const Home: React.FC = () => {
   const [role,setRole] = useState('')
   const router = useRouter();
-  const { data: session } : any = useSession();
+  const { data: session, status } : any = useSession();
   useEffect(() => {
     if (session) {
       const category = session?.user?.user?.category
@@ -28,7 +28,38 @@ const Home: React.FC = () => {
   const handleLogout = () =>{
     signOut()
   }
-  
+
+  if (status === 'loading') {
+    return (
+      <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <svg
+            className="animate-spin h-10 w-10 text-gray-600 dark:text-gray-300 mx-auto mb-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l-3 3 3 3v4a8 8 0 01-8-8z"
+            ></path>
+          </svg>
+          <p className="text-lg text-gray-700 dark:text-gray-300">
+            Loading, please wait...
+          </p>
+        </div>
+      </section>
+    );
+  }
   
   return (
     <div className="flex justify-center items-center min-h-screen bg-black-100">
