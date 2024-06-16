@@ -64,7 +64,8 @@ export default function SurveyForm() {
     };
   
     return (
-      <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-black rounded-lg shadow-md">
+        <div className="mb-8 bg-gray-800 p-4 rounded-lg">
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2">Survey Name:</label>
           <input
@@ -99,8 +100,9 @@ export default function SurveyForm() {
             </label>
           </div>
         </div>
+        </div>
         {questions.map((q, index) => (
-          <div key={index} className="mb-4">
+          <div key={index} className="mb-8 bg-gray-800 p-4 rounded-lg">
             <label className="block text-gray-700 dark:text-gray-300 font-bold mb-2">Question {index + 1} (Level {q.level}):</label>
             <input
               type="text"
@@ -163,7 +165,7 @@ export default function SurveyForm() {
             </div>
           </div>
         ))}
-        <button type="submit" className="w-full px-4 py-2 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 dark:bg-green-700 dark:hover:bg-green-500">
+        <button type="submit" className="w-full px-4 py-2 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 dark:bg-green-700 dark:hover:bg-green-500 mb-8 bg-gray-800 p-4 rounded-lg">
           Create Survey
         </button>
       </form>
