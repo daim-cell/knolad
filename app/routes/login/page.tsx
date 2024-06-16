@@ -13,7 +13,6 @@ export default function LoginPage() {
   const { data: session } = useSession();
   useEffect(() => {
     if (session) {
-      console.log(session)
       router.push('/')
     }
   }, [session])
@@ -27,13 +26,11 @@ export default function LoginPage() {
         password,
         redirect: false,
       });
-      console.log("response",{ response });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       // Process response here
-      console.log("Login Successful", response);
       toast.success("Login Successful");
     } catch (error: any) {
       console.error("Login Failed:", error);

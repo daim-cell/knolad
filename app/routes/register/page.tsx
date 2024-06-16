@@ -18,19 +18,16 @@ export default function Register() {
   useEffect(() => {
     if (session) {
       const category = session?.user?.user?.category;
-      console.log("session in home", category);
       setRole(category);
     }
   }, [session]);
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
     setCategory(event.target.value);
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log('Form submitted with email:', email, 'and password:', password, category);
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
@@ -43,7 +40,6 @@ export default function Register() {
         throw new Error("Network response was not ok");
       }
       // Process response here
-      console.log("Registration Successful", response);
       toast.success("Registration Successful");
     } catch (error: any) {
       console.error("Registration Failed:", error);

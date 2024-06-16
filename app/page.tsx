@@ -11,7 +11,6 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (session) {
       const category = session?.user?.user?.category
-      console.log("session in home",category)
       setRole(category)
     }
   }, [session])

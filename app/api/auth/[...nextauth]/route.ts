@@ -27,12 +27,10 @@ const handler = NextAuth({
         }
 
         const db = await openDB();
-        console.log("credentials", credentials);
 
         try {
           const response:any = await db.get(`SELECT * FROM users WHERE username = ?`, [credentials.email]);
           const user = response;
-          console.log("user", user);
 
           if (user) {
             const passwordCorrect = await compare(credentials.password, user.password);

@@ -27,7 +27,6 @@ const RegisterForm: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       setError('');
       // Handle successful registration, e.g., redirect to login page
       router.push('/routes/login');

@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     const { email, password, category } = await request.json();
 
     const db = await openDB();
-    console.log({ email, password, category});
 
     const hashedPassword = await hash(password, 10);
 

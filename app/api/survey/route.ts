@@ -36,7 +36,6 @@ export async function POST(req: Request) {
       ) {
           return NextResponse.json({ error: 'Invalid survey structure' });
       }
-      console.log(survey_name, opened)
       const db = await openDB();
 
       const surveyResult = await db.run( 'INSERT INTO survey (survey_name, opened) VALUES (?, ?)', [survey_name, opened]);
@@ -68,7 +67,6 @@ export async function POST(req: Request) {
     else{
       surveyData = await db.all('SELECT * FROM survey');
     }
-    console.log(surveyData)
     return NextResponse.json(surveyData);
   }
   

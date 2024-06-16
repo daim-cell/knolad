@@ -52,9 +52,7 @@ const HistoryPage: React.FC = () => {
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       await setHistory(Array.isArray(data.history) ? data.history : []);
-      console.log(history);
     }
   };
 
