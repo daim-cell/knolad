@@ -108,6 +108,7 @@ const HistoryPage: React.FC = () => {
       <div className="mt-4 mb-6">
         <label htmlFor="survey-select" className="block mb-2">Filter by Survey:</label>
         <select id="survey-select" className="bg-gray-100 text-black border rounded mt-2" onChange={handleSurveyChange}>
+          <option value=''>All surveys</option>
           {surveys.map(survey => (
             <option key={survey.survey_id} value={survey.survey_id}>
               {survey.survey_name}
