@@ -2,6 +2,7 @@
 import SurveyList from '../../components/SurveyList';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import HomeButton from '../../components/Home';
 
 export default function Home() {
   const router = useRouter();
@@ -44,6 +45,9 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-4">
+            <HomeButton />
+      </div>
     <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">All Surveys</h1>
       <SurveyList />
     </div>

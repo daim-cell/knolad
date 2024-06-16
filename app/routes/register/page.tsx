@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import RadioButton from '../../components/Radio';
+import HomeButton from '../../components/Home';
 
 
 export default function Register() {
@@ -87,6 +88,9 @@ export default function Register() {
       <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
         <div className="w-full bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 sm:p-8">
+          <div className="flex justify-between items-center mb-4">
+            <HomeButton />
+          </div>
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Register your user
             </h1>

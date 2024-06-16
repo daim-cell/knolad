@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import HomeButton from '../../components/Home';
 
 interface HistoryRecord {
   id: number;
@@ -103,9 +104,12 @@ const HistoryPage: React.FC = () => {
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">History</h1>
+      <div className="flex justify-between items-center mb-4">
+        <HomeButton />
+      </div>
       <div className="mt-4 mb-6">
         <label htmlFor="survey-select" className="block mb-2">Filter by Survey:</label>
-        <select id="survey-select" className="bg-gray-100 border rounded mt-2" onChange={handleSurveyChange}>
+        <select id="survey-select" className="bg-gray-100 text-black border rounded mt-2" onChange={handleSurveyChange}>
           {surveys.map(survey => (
             <option key={survey.survey_id} value={survey.survey_id}>
               {survey.survey_name}
@@ -116,7 +120,7 @@ const HistoryPage: React.FC = () => {
       <table className="w-full border-collapse">
         <thead>
           <tr>
-            <th className="border p-2">Username</th>
+            <th className="border p-2">Student Name</th>
             <th className="border p-2">Survey Name</th>
             <th className="border p-2">Test Result</th>
             <th className="border p-2">Test Taken</th>
